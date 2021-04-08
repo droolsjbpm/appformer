@@ -1,0 +1,24 @@
+name: "Kogito Tooling :: Build chain."
+
+on: [pull_request]
+
+jobs:
+  build-chain:
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    name: Build chain
+    steps:
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Run build chain
+        id: build-chain
+        uses: kiegroup/github-action-build-chain@tiagosflow
+        with:
+          starting-project: kiegroup/kogito-tooling
+          definition-file: https://raw.githubusercontent.com/Ginxo/appformer/kogito/ci_flow/.ci/kogito-tooling-definition.yaml
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
